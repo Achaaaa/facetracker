@@ -8,16 +8,23 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
 </head>
 <h1>見出し2</h1>
-<body>
+<!--<iframe id="special" src="https://www.spatial.io/s/RAP-63ccafd63bb2bcb1641c23c2?share=3030783212154158403" width="1920" height="1080"></iframe>-->
+<body id = "acha">
   <div class="container">
     <video class="input_video"></video>
-    <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+    <canvas class="output_canvas" width="640px" height="360px"></canvas>
   </div>
   <div>
     <script type="module">
         const videoElement = document.getElementsByClassName('input_video')[0];
         const canvasElement = document.getElementsByClassName('output_canvas')[0];
         const canvasCtx = canvasElement.getContext('2d');
+        var leftEyeUpper = null;
+            var leftEyeLower = null;
+            var rightEyeUpper = null;
+            var rightEyeLower = null;
+            var leftEyeClosed = false;
+            var rightEyeClosed = false;
         
         function onResults(results) {
           canvasCtx.save();
@@ -43,7 +50,7 @@
                         rightEyeLower = results.multiFaceLandmarks[0][374]
                         if (Math.abs(leftEyeUpper.y - leftEyeLower.y) < 0.009) {
                             leftEyeClosed = true;
-                            
+                            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
                         }
                         else {
                             leftEyeClosed = false;
@@ -57,7 +64,6 @@
                         if (leftEyeClosed && rightEyeClosed) {
                             closeEye();
                         }
-
                         if (leftEyeClosed == false && rightEyeClosed == false) {
                             openEye();
                         }
@@ -86,6 +92,44 @@
         });
         camera.start();
         </script>
+        <input type="button" value="button" onclick="buttonClick()">
+        <input type="text" id = "inin">
+        <script>
+          alert("hello");
+          var evt = document.createEvent('KeyboardEvent');
+          document.addEventListener('keydown', keydownEvent,false);
+          function keydownEvent(event){
+            if(event.key === "a" || event.key === "A") {
+              console.log("hi");
+            }
+          }
+          function buttonClick(){
+}
+          function openEye() {
+            
+          }
+          function closeEye() {
+            console.log("closed");
+            fn();
+          }
+          function keyDown(event){
+    console.log('code:' + event.code + ', key:' + event.key);
+}
+          document.body.insertAdjacentHTML("beforeend", "<input id='test' type='checkbox'>")
+
+var ev = document.createEvent("KeyboardEvent", { keyCode: 65 })
+ev.initKeyboardEvent("KeyDown", false, false)
+
+var el = document.getElementById("inin")
+
+document.addEventListener("KeyDown", fn, false)
+function fn(){
+  var ev = document.createEvent("KeyboardEvent", { keyCode: 65 })
+ev.initKeyboardEvent("KeyDown", false, false)
+  el.dispatchEvent(ev)
+  console.log("fffnnn");
+}
+      </script>
     </div>
 </body>
 </html>
