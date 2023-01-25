@@ -36,6 +36,31 @@
               drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
               drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
               drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
+
+              leftEyeUpper = results.multiFaceLandmarks[0][159]
+                        leftEyeLower = results.multiFaceLandmarks[0][145]
+                        rightEyeUpper = results.multiFaceLandmarks[0][386]
+                        rightEyeLower = results.multiFaceLandmarks[0][374]
+                        if (Math.abs(leftEyeUpper.y - leftEyeLower.y) < 0.009) {
+                            leftEyeClosed = true;
+                            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+                        }
+                        else {
+                            leftEyeClosed = false;
+                        }
+                        if (Math.abs(rightEyeUpper.y - rightEyeLower.y) < 0.009) {
+                            rightEyeClosed = true;
+                        }
+                        else {
+                            rightEyeClosed = false;
+                        }
+                        if (leftEyeClosed && rightEyeClosed) {
+                            closeEye();
+                        }
+
+                        if (leftEyeClosed == false && rightEyeClosed == false) {
+                            openEye();
+                        }
             }
           }
           canvasCtx.restore();
